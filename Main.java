@@ -49,12 +49,14 @@ class WikiSearch {
         }
 
         // Выбор статьи
-        System.out.println("Выберете статью:");
-        int choice = in.nextInt();
-        if (choice < 1 || choice > titles.length) {
-            System.out.println("Статьи с таким номером не существует.");
-            return;
-        }
+        int choice;
+        do {
+            System.out.println("Выберете статью:");
+            choice = in.nextInt();
+            if (choice < 1 || choice > titles.length) {
+                System.out.println("Статьи с таким номером не существует.");
+            }
+        }while (choice < 1 || choice > titles.length);
 
         // Генерация ссылки на статью
         String articleUrl = "https://ru.wikipedia.org/w/index.php?curid=" + pageid[choice - 1];
