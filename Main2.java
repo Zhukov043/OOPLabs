@@ -10,7 +10,7 @@ class Menu {
         Scanner in = new Scanner(System.in);
         int choice;
         do{
-            System.out.println("1. Ввести название файла");
+            System.out.println("1. Ввести путь до файла");
             System.out.println("2. Завершить работу");
             choice = in.nextInt();
             if (choice == 1) first();
@@ -21,13 +21,22 @@ class Menu {
 
     private static void first(){
         Scanner in = new Scanner(System.in);
-        System.out.println("Название файла: ");
-        String file = in.nextLine();
+        String file;
+        boolean flag;
+        do {
+            flag = true;
+            System.out.println("Путь до файла: ");
+            file = in.nextLine();
+            if (file.lastIndexOf("csv") != file.length() - 3 &&
+                    file.lastIndexOf("xml") != file.length() - 3  ){
+                System.out.println("Некорректный файл! Программа работает только с xml и csv файлами.");
+                flag = false;
+            }
+        }while (!flag);
         HashMap<String,  ArrayList<String>> fileData = new HashMap<>();
         long start = System.nanoTime();
         if (file.lastIndexOf("csv") == file.length() - 3) fileData = ReadFile.readCSV(file);
         else if (file.lastIndexOf("xml") == file.length() - 3) fileData = ReadFile.readXML(file);
-        else System.out.println("Некорректный файл!");
         fileData = ProcessingFile.repeat(fileData);
         ProcessingFile.buildings(fileData);
         long end = System.nanoTime();
